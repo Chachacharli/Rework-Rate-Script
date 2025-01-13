@@ -1,10 +1,11 @@
+
 #!/bin/bash
 
 # Variables
 OUTPUT_CHANGES="rework_changes.txt"
 OUTPUT_SPECIFIC="specific_rework_changes.txt"
 OUTPUT_PERCENTAGE="rework_percentage.txt"
-EXCLUDED_FILES="CHANGELOG.md package.json"
+EXCLUDED_FILES="CHANGELOG.md package.json .*\.csproj .*\.Designer\.cs _GlobalAssemblyInfo.cs AssemblyInfo.cs .*\.dll Services/SIGLONET/Business/Scisa.Focys.Business.Components/Service* .*\.sln .*\.config"
 DAYS=80
 
 # Validar si el script se ejecuta en un repositorio Git
@@ -44,7 +45,7 @@ declare -A file_change_count
 for commit in $COMMITS; do
     # Obtener los archivos modificados en el commit, excluyendo los archivos especificados
     modified_files=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -Ev "$EXCLUDE_PATTERN")
-    
+
     for file in $modified_files; do
         total_changes=$((total_changes + 1))
 
